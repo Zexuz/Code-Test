@@ -1,3 +1,4 @@
+using System;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -32,13 +33,23 @@ namespace Stratsys.Core.Test
             Assert.Equal(max, res.Max);
         }
 
-        [InlineData(110, 110, 120)]
+        [InlineData(110, 120, 130)]
         [InlineData(150, 160, 170)]
         [InlineData(135, 145, 155)]
         [Theory]
         public void FiveToEigthLenghtSuccess(int personHeight, int min, int max)
         {
-            Assert.False(true);
+            var input = new UserInput
+            {
+                Age = 6,
+                Height = personHeight,
+                SkiType = SkiType.Classic
+            };
+
+            var res = _skiService.RecomendedSkiLenght(input);
+
+            Assert.Equal(min, res.Min);
+            Assert.Equal(max, res.Max);
         }
 
         [InlineData(200, 207, 207)]
@@ -49,7 +60,17 @@ namespace Stratsys.Core.Test
         [Theory]
         public void AdultClassicSuccess(int personHeight, int min, int max)
         {
-            Assert.False(true);
+            var input = new UserInput
+            {
+                Age = 25,
+                Height = personHeight,
+                SkiType = SkiType.Classic
+            };
+
+            var res = _skiService.RecomendedSkiLenght(input);
+
+            Assert.Equal(min, res.Min);
+            Assert.Equal(max, res.Max);
         }
 
 
@@ -59,7 +80,17 @@ namespace Stratsys.Core.Test
         [Theory]
         public void AdultFreeStyle(int personHeight, int min, int max)
         {
-            Assert.False(true);
+            var input = new UserInput
+            {
+                Age = 25,
+                Height = personHeight,
+                SkiType = SkiType.FreeStyle
+            };
+
+            var res = _skiService.RecomendedSkiLenght(input);
+
+            Assert.Equal(min, res.Min);
+            Assert.Equal(max, res.Max);
         }
 
 
@@ -80,8 +111,31 @@ namespace Stratsys.Core.Test
     {
         public SkiRange RecomendedSkiLenght(UserInput input)
         {
-            if (input.Age < 4)
+            if (input.Age <= 4)
                 return new SkiRange(input.Height, input.Height);
+            if (input.Age <= 8)
+                return new SkiRange(input.Height + 10, input.Height + 20);
+
+            switch (input.SkiType)
+            {
+                case SkiType.Classic:
+                    var maxLenght = 207;
+                    var recomendedSkiRange = new SkiRange(20, 20);
+                    var recomendedMaxLenght = input.Height + recomendedSkiRange.Max;
+                    var recomendedMinLenght = input.Height + recomendedSkiRange.Min;
+
+
+                    if (recomendedMinLenght > maxLenght && recomendedMaxLenght > maxLenght)
+                        return new SkiRange(maxLenght, maxLenght);
+
+                    return new SkiRange(recomendedMinLenght, recomendedMaxLenght);
+                case SkiType.FreeStyle:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+
             throw new System.NotImplementedException();
         }
     }
