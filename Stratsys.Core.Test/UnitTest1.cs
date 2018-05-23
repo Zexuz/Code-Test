@@ -1,16 +1,35 @@
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Stratsys.Core.Test
 {
     public class UnitTest1
     {
+        private SkiService _skiService;
+
+        public UnitTest1()
+        {
+            _skiService = new SkiService();
+        }
+
+
         [InlineData(51, 51, 51)]
         [InlineData(78, 78, 78)]
         [InlineData(101, 101, 101)]
         [Theory]
         public void ZeroToFourLenghtSuccess(int personHeight, int min, int max)
         {
-            Assert.False(true);
+            var input = new UserInput
+            {
+                Age = 3,
+                Height = personHeight,
+                SkiType = SkiType.Classic
+            };
+
+            var res = _skiService.RecomendedSkiLenght(input);
+
+            Assert.Equal(min, res.Min);
+            Assert.Equal(max, res.Max);
         }
 
         [InlineData(110, 110, 120)]
@@ -61,6 +80,8 @@ namespace Stratsys.Core.Test
     {
         public SkiRange RecomendedSkiLenght(UserInput input)
         {
+            if (input.Age < 4)
+                return new SkiRange(input.Height, input.Height);
             throw new System.NotImplementedException();
         }
     }
@@ -72,8 +93,14 @@ namespace Stratsys.Core.Test
 
     public class SkiRange
     {
-        public int Min { get; set; }
-        public int Max { get; set; }
+        public int Min { get; }
+        public int Max { get; }
+
+        public SkiRange(int min, int max)
+        {
+            Min = min;
+            Max = max;
+        }
     }
 
 
