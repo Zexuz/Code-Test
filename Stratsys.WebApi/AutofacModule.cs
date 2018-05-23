@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using Microsoft.Extensions.Configuration;
+using Stratsys.WebApi.Loggers;
+using Stratsys.WebApi.Middlewares;
 
 namespace Stratsys.WebApi
 {
@@ -15,7 +17,7 @@ namespace Stratsys.WebApi
 
         protected override void Load(ContainerBuilder builder)
         {
-//            builder.RegisterType<UserService>().As<IUserService>();
+            builder.RegisterType<ConsoleLogger>().As<ILogger>();
         } 
         
     }

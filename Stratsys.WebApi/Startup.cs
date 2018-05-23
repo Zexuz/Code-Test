@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Stratsys.WebApi.Middlewares;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Stratsys.WebApi
@@ -48,6 +49,8 @@ namespace Stratsys.WebApi
                 app.UseXContentTypeOptions();
                 app.UseXfo(options => options.Deny());
             }
+
+            app.UseMiddleware<HttpLogMiddleware>();
 
             app.UseMvc();
         }
