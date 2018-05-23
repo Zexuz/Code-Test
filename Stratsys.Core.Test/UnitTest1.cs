@@ -1,6 +1,5 @@
 using System;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Stratsys.Core.Test
 {
@@ -10,7 +9,7 @@ namespace Stratsys.Core.Test
 
         public UnitTest1()
         {
-            _skiService = new SkiService(new Range(0,125),new Range(30,245) );
+            _skiService = new SkiService(new Range(0, 125), new Range(30, 245));
         }
 
 
@@ -103,7 +102,7 @@ namespace Stratsys.Core.Test
         [Theory]
         public void InvalidGeneralLenghtThrowsException(int personHeight)
         {
-            Assert.ThrowsAny<Exception>(() =>
+            Assert.Throws<InvalidHeightException>(() =>
                 _skiService.RecomendedSkiLenght(new UserInput {Age = 4, Height = personHeight, SkiType = SkiType.Classic}));
         }
 
@@ -114,7 +113,7 @@ namespace Stratsys.Core.Test
         [Theory]
         public void InvalidAgeThrowsException(int age)
         {
-            Assert.ThrowsAny<Exception>(() =>
+            Assert.Throws<InvalidAgeException>(() =>
                 _skiService.RecomendedSkiLenght(new UserInput {Age = age, Height = 145, SkiType = SkiType.Classic}));
         }
     }
@@ -132,17 +131,7 @@ namespace Stratsys.Core.Test
 
         public Range RecomendedSkiLenght(UserInput input)
         {
-            if (input.Height <= _validHeightRange.Min)
-                throw new Exception("To short");
-
-            if (input.Height >= _validHeightRange.Max)
-                throw new Exception("To long");
-         
-            if (input.Age<= _valiAgeRange.Min)
-                throw new Exception("To short");
-
-            if (input.Age >= _valiAgeRange.Max)
-                throw new Exception("To long");
+            ValidateInput(input);
 
             if (input.Age <= 4)
                 return new Range(input.Height, input.Height);
@@ -171,6 +160,35 @@ namespace Stratsys.Core.Test
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private void ValidateInput(UserInput input)
+        {
+            if (input.Height <= _validHeightRange.Min)
+                throw new InvalidHeightException(input.Height, _validHeightRange.Min, _validHeightRange.Max);
+
+            if (input.Height >= _validHeightRange.Max)
+                throw new InvalidHeightException(input.Height, _validHeightRange.Min, _validHeightRange.Max);
+
+            if (input.Age <= _valiAgeRange.Min)
+                throw new InvalidAgeException(input.Age, _valiAgeRange.Min, _valiAgeRange.Max);
+
+            if (input.Age >= _valiAgeRange.Max)
+                throw new InvalidAgeException(input.Age, _valiAgeRange.Min, _valiAgeRange.Max);
+        }
+    }
+
+    public class InvalidAgeException : Exception
+    {
+        public InvalidAgeException(int age, int max, int min) : base($"The age {age} must be within the span of {min} - {max}")
+        {
+        }
+    }
+
+    public class InvalidHeightException : Exception
+    {
+        public InvalidHeightException(int height, int max, int min) : base($"The height {height} must be within the span of {min} - {max}")
+        {
         }
     }
 
