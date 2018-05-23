@@ -12,8 +12,8 @@ namespace Stratsys.Core.Test
 
         public UnitTest1()
         {
-            var ageRange = new Range(ValidationRules.MinAge, ValidationRules.MaxAge);
-            var heightRange = new Range(ValidationRules.MinHeight, ValidationRules.MaxHeight);
+            var ageRange = new Range(Config.MinAge, Config.MaxAge);
+            var heightRange = new Range(Config.MinHeight, Config.MaxHeight);
 
             _skiService = new SkiService(ageRange, heightRange);
         }

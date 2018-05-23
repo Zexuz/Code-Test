@@ -6,11 +6,11 @@ namespace Stratsys.WebApi.Models
     public class GetSkiLenghtModel
     {
         [Required]
-        [Range(ValidationRules.MinHeight,ValidationRules.MaxHeight)]
+        [Range(Config.MinHeight,Config.MaxHeight)]
         public int Height { get; set; }
         
         [Required]
-        [Range(ValidationRules.MinAge,ValidationRules.MaxAge)]
+        [Range(Config.MinAge,Config.MaxAge)]
         public int Age { get; set; }
 
         public string SkiType { get; set; }

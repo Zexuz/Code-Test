@@ -1,6 +1,6 @@
 ﻿namespace Startsys.Core
 {
-    public static class ValidationRules
+    public static class Config
     {
         public const int MinHeight = 30;
         public const int MaxHeight = 245;
