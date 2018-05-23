@@ -19,7 +19,7 @@ namespace Stratsys.WebApi
             var ipString = config.GetSection("ip").Value;
 
             var port = string.IsNullOrEmpty(portString) ? 5000 : int.Parse(portString);
-            var ip = string.IsNullOrEmpty(ipString) ? IPAddress.Any : IPAddress.Parse(ipString);
+            var ip = string.IsNullOrEmpty(ipString) ? IPAddress.Loopback: IPAddress.Parse(ipString);
 
             var host = WebHost.CreateDefaultBuilder(args)
                 .UseConfiguration(config)

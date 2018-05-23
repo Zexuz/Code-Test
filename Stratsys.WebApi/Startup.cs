@@ -28,7 +28,7 @@ namespace Stratsys.WebApi
                 c.SwaggerDoc("v1", new Info {Title = "My API", Version = "v1"});
 
                 var basePath = AppContext.BaseDirectory;
-                var xmlPath = Path.Combine(basePath, "WebApi.xml");
+                var xmlPath = Path.Combine(basePath, "Stratsys.WebApi.xml");
                 c.IncludeXmlComments(xmlPath);
             });
         }
