@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Startsys.Core.Loggers;
 using Stratsys.WebApi.Loggers;
 
 namespace Stratsys.WebApi.Middlewares
@@ -25,14 +26,14 @@ namespace Stratsys.WebApi.Middlewares
             {
                 await _next(httpContext);
                 httpLog.Stop();
-                _logger.Info(httpLog);
+                _logger.Info(httpLog.ToString());
             }
             catch (Exception ex)
             {
                 httpLog.Stop();
                 //TODO Cratea a corrilationId and show that to the client for esier support tickets
 
-                _logger.Error(httpLog, ex);
+                _logger.Error(httpLog.ToString(), ex);
                 httpContext.Response.StatusCode = 500;
                 await httpContext.Response.WriteAsync("UNKOWN ERROR");
             }

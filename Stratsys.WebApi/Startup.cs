@@ -57,7 +57,7 @@ namespace Stratsys.WebApi
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            builder.RegisterModule(new AutofacModule(Configuration));
+            builder.RegisterModule(new WebApiModel(Configuration));
         }
     }
 }

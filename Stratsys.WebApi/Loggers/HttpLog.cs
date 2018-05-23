@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Net;
 using Microsoft.AspNetCore.Http;
+using Startsys.Core.Loggers;
 
 namespace Stratsys.WebApi.Loggers
 {
@@ -33,6 +34,11 @@ namespace Stratsys.WebApi.Loggers
         {
             Stopwatch.Stop();
             StatusCode = _httpContext.Response?.StatusCode;
+        }
+
+        public override string ToString()
+        {
+            return $"Path:{Path}, Duration:{ElipsedMilliseconds}, StausCode:{StatusCode}, Ip:{IpAddress}, Referer:{Referer}, UserAgent:{UserAgent} ";
         }
     }
 }

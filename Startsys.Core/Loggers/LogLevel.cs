@@ -1,4 +1,4 @@
-﻿namespace Stratsys.WebApi.Loggers
+﻿namespace Startsys.Core.Loggers
 {
     public enum LogLevel
     {

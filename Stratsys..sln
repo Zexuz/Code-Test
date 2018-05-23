@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stratsys.WebApi", "Stratsys.WebApi\Stratsys.WebApi.csproj", "{8E9869CF-1B6B-48FE-93CD-E9D99B11D755}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Startsys.Core", "Startsys.Core\Startsys.Core.csproj", "{5C6432E7-164C-4203-BE07-1CC03A407D65}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{8E9869CF-1B6B-48FE-93CD-E9D99B11D755}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E9869CF-1B6B-48FE-93CD-E9D99B11D755}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E9869CF-1B6B-48FE-93CD-E9D99B11D755}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C6432E7-164C-4203-BE07-1CC03A407D65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C6432E7-164C-4203-BE07-1CC03A407D65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C6432E7-164C-4203-BE07-1CC03A407D65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C6432E7-164C-4203-BE07-1CC03A407D65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
