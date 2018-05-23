@@ -10,7 +10,7 @@ namespace Stratsys.Core.Test
 
         public UnitTest1()
         {
-            _skiService = new SkiService();
+            _skiService = new SkiService(new Range(0,125),new Range(30,245) );
         }
 
 
@@ -103,54 +103,88 @@ namespace Stratsys.Core.Test
         [Theory]
         public void InvalidGeneralLenghtThrowsException(int personHeight)
         {
-            Assert.False(true);
+            Assert.ThrowsAny<Exception>(() =>
+                _skiService.RecomendedSkiLenght(new UserInput {Age = 4, Height = personHeight, SkiType = SkiType.Classic}));
+        }
+
+        [InlineData(-1)]
+        [InlineData(-175)]
+        [InlineData(125)]
+        [InlineData(200)]
+        [Theory]
+        public void InvalidAgeThrowsException(int age)
+        {
+            Assert.ThrowsAny<Exception>(() =>
+                _skiService.RecomendedSkiLenght(new UserInput {Age = age, Height = 145, SkiType = SkiType.Classic}));
         }
     }
 
     public class SkiService : ISkiService
     {
-        public SkiRange RecomendedSkiLenght(UserInput input)
+        private readonly Range _valiAgeRange;
+        private readonly Range _validHeightRange;
+
+        public SkiService(Range valiAgeRange, Range validHeightRange)
         {
+            _valiAgeRange = valiAgeRange;
+            _validHeightRange = validHeightRange;
+        }
+
+        public Range RecomendedSkiLenght(UserInput input)
+        {
+            if (input.Height <= _validHeightRange.Min)
+                throw new Exception("To short");
+
+            if (input.Height >= _validHeightRange.Max)
+                throw new Exception("To long");
+         
+            if (input.Age<= _valiAgeRange.Min)
+                throw new Exception("To short");
+
+            if (input.Age >= _valiAgeRange.Max)
+                throw new Exception("To long");
+
             if (input.Age <= 4)
-                return new SkiRange(input.Height, input.Height);
+                return new Range(input.Height, input.Height);
             if (input.Age <= 8)
-                return new SkiRange(input.Height + 10, input.Height + 20);
+                return new Range(input.Height + 10, input.Height + 20);
 
             switch (input.SkiType)
             {
                 case SkiType.Classic:
                     var maxLenght = 207;
-                    var recomendedSkiRange = new SkiRange(20, 20);
+                    var recomendedSkiRange = new Range(20, 20);
                     var recomendedMaxLenght = input.Height + recomendedSkiRange.Max;
                     var recomendedMinLenght = input.Height + recomendedSkiRange.Min;
 
 
                     if (recomendedMinLenght > maxLenght && recomendedMaxLenght > maxLenght)
-                        return new SkiRange(maxLenght, maxLenght);
+                        return new Range(maxLenght, maxLenght);
 
-                    return new SkiRange(recomendedMinLenght, recomendedMaxLenght);
+                    return new Range(recomendedMinLenght, recomendedMaxLenght);
                 case SkiType.FreeStyle:
-                    break;
+                    var recomendedSkiRangeFree = new Range(10, 15);
+                    var recomendedMaxLenghtFree = input.Height + recomendedSkiRangeFree.Max;
+                    var recomendedMinLenghtFree = input.Height + recomendedSkiRangeFree.Min;
+
+                    return new Range(recomendedMinLenghtFree, recomendedMaxLenghtFree);
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
-
-            throw new System.NotImplementedException();
         }
     }
 
     public interface ISkiService
     {
-        SkiRange RecomendedSkiLenght(UserInput input);
+        Range RecomendedSkiLenght(UserInput input);
     }
 
-    public class SkiRange
+    public class Range
     {
         public int Min { get; }
         public int Max { get; }
 
-        public SkiRange(int min, int max)
+        public Range(int min, int max)
         {
             Min = min;
             Max = max;
