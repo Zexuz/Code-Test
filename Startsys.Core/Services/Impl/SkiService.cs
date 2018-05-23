@@ -42,7 +42,7 @@ namespace Startsys.Core.Services.Impl
             if (input.Height >= _validHeightRange.Max)
                 throw new InvalidHeightException(input.Height, _validHeightRange.Min, _validHeightRange.Max);
 
-            if (input.Age <= _valiAgeRange.Min)
+            if (input.Age < _valiAgeRange.Min)
                 throw new InvalidAgeException(input.Age, _valiAgeRange.Min, _valiAgeRange.Max);
 
             if (input.Age >= _valiAgeRange.Max)

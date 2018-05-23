@@ -15,34 +15,21 @@ namespace Stratsys.Core.Test
         }
 
 
-        [InlineData(51, 51, 51)]
-        [InlineData(78, 78, 78)]
-        [InlineData(101, 101, 101)]
+        [InlineData(51, 51, 51,0)]
+        [InlineData(78, 78, 78,1)]
+        [InlineData(101, 101, 101,2)]
+        [InlineData(120, 120, 120,3)]
+        [InlineData(128, 128, 128,4)]
+        [InlineData(110, 120, 130,5)]
+        [InlineData(150, 160, 170,6)]
+        [InlineData(135, 145, 155,7)]
+        [InlineData(135, 145, 155,8)]
         [Theory]
-        public void ZeroToFourLenghtSuccess(int personHeight, int min, int max)
+        public void ZeroToFourLenghtSuccess(int personHeight, int min, int max, int age)
         {
             var input = new UserInput
             {
-                Age = 3,
-                Height = personHeight,
-                SkiType = SkiType.Classic
-            };
-
-            var res = _skiService.RecomendedSkiLenght(input);
-
-            Assert.Equal(min, res.Min);
-            Assert.Equal(max, res.Max);
-        }
-
-        [InlineData(110, 120, 130)]
-        [InlineData(150, 160, 170)]
-        [InlineData(135, 145, 155)]
-        [Theory]
-        public void FiveToEigthLenghtSuccess(int personHeight, int min, int max)
-        {
-            var input = new UserInput
-            {
-                Age = 6,
+                Age = age,
                 Height = personHeight,
                 SkiType = SkiType.Classic
             };
@@ -93,6 +80,28 @@ namespace Stratsys.Core.Test
             Assert.Equal(min, res.Min);
             Assert.Equal(max, res.Max);
         }
+        
+        [InlineData(51, 50, 52,0)]
+        [InlineData(120, 121, 140,3)]
+        [InlineData(128, 100, 127,4)]
+        [InlineData(110, 119, 131,5)]
+        [InlineData(110, 119, 129,5)]
+        [Theory]
+        public void ZeroToFourLenghtFails(int personHeight, int min, int max, int age)
+        {
+            var input = new UserInput
+            {
+                Age = age,
+                Height = personHeight,
+                SkiType = SkiType.Classic
+            };
+
+            var res = _skiService.RecomendedSkiLenght(input);
+
+            Assert.NotEqual(min, res.Min);
+            Assert.NotEqual(max, res.Max);
+        }
+
 
 
         [InlineData(30)]
