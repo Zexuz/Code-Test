@@ -1,3 +1,4 @@
+using Startsys.Core;
 using Startsys.Core.Exceptions;
 using Startsys.Core.Models;
 using Startsys.Core.Services.Impl;
@@ -11,19 +12,22 @@ namespace Stratsys.Core.Test
 
         public UnitTest1()
         {
-            _skiService = new SkiService(new Range(0, 125), new Range(30, 245));
+            var ageRange = new Range(ValidationRules.MinAge, ValidationRules.MaxAge);
+            var heightRange = new Range(ValidationRules.MinHeight, ValidationRules.MaxHeight);
+
+            _skiService = new SkiService(ageRange, heightRange);
         }
 
 
-        [InlineData(51, 51, 51,0)]
-        [InlineData(78, 78, 78,1)]
-        [InlineData(101, 101, 101,2)]
-        [InlineData(120, 120, 120,3)]
-        [InlineData(128, 128, 128,4)]
-        [InlineData(110, 120, 130,5)]
-        [InlineData(150, 160, 170,6)]
-        [InlineData(135, 145, 155,7)]
-        [InlineData(135, 145, 155,8)]
+        [InlineData(51, 51, 51, 0)]
+        [InlineData(78, 78, 78, 1)]
+        [InlineData(101, 101, 101, 2)]
+        [InlineData(120, 120, 120, 3)]
+        [InlineData(128, 128, 128, 4)]
+        [InlineData(110, 120, 130, 5)]
+        [InlineData(150, 160, 170, 6)]
+        [InlineData(135, 145, 155, 7)]
+        [InlineData(135, 145, 155, 8)]
         [Theory]
         public void ZeroToFourLenghtSuccess(int personHeight, int min, int max, int age)
         {
@@ -80,12 +84,12 @@ namespace Stratsys.Core.Test
             Assert.Equal(min, res.Min);
             Assert.Equal(max, res.Max);
         }
-        
-        [InlineData(51, 50, 52,0)]
-        [InlineData(120, 121, 140,3)]
-        [InlineData(128, 100, 127,4)]
-        [InlineData(110, 119, 131,5)]
-        [InlineData(110, 119, 129,5)]
+
+        [InlineData(51, 50, 52, 0)]
+        [InlineData(120, 121, 140, 3)]
+        [InlineData(128, 100, 127, 4)]
+        [InlineData(110, 119, 131, 5)]
+        [InlineData(110, 119, 129, 5)]
         [Theory]
         public void ZeroToFourLenghtFails(int personHeight, int min, int max, int age)
         {
@@ -101,7 +105,6 @@ namespace Stratsys.Core.Test
             Assert.NotEqual(min, res.Min);
             Assert.NotEqual(max, res.Max);
         }
-
 
 
         [InlineData(30)]
