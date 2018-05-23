@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stratsys.WebApi", "Stratsys
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Startsys.Core", "Startsys.Core\Startsys.Core.csproj", "{5C6432E7-164C-4203-BE07-1CC03A407D65}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stratsys.Core.Test", "Stratsys.Core.Test\Stratsys.Core.Test.csproj", "{D45FA629-FDAD-4B5D-955D-9E173CD317E6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{5C6432E7-164C-4203-BE07-1CC03A407D65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C6432E7-164C-4203-BE07-1CC03A407D65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C6432E7-164C-4203-BE07-1CC03A407D65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D45FA629-FDAD-4B5D-955D-9E173CD317E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D45FA629-FDAD-4B5D-955D-9E173CD317E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D45FA629-FDAD-4B5D-955D-9E173CD317E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D45FA629-FDAD-4B5D-955D-9E173CD317E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
