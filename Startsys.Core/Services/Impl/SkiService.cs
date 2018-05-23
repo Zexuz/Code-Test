@@ -34,49 +34,6 @@ namespace Startsys.Core.Services.Impl
             }
         }
 
-        private Range GetSkiLenghtForSmallKids(UserInput input)
-        {
-            var recomendedSkiRange = new Range(0, 0);
-
-            return new Range(input.Height + recomendedSkiRange.Min, input.Height + recomendedSkiRange.Max);
-        }
-
-        private Range GetSkiLenghtForMediumKids(UserInput input)
-        {
-            var recomendedSkiRange = new Range(10, 20);
-            return new Range(input.Height + recomendedSkiRange.Min, input.Height + recomendedSkiRange.Max);
-        }
-
-
-        private Range GetSkiLengthForClassic(UserInput input)
-        {
-            var maxLenght = 207;
-            var recomendedSkiRange = new Range(20, 20);
-
-            var recomendedLenght = GetRecomendedLenght(input.Height, recomendedSkiRange);
-
-            if (recomendedLenght.Min > maxLenght && recomendedLenght.Max > maxLenght)
-                return new Range(maxLenght, maxLenght);
-
-            if (recomendedLenght.Max > maxLenght)
-                return new Range(recomendedLenght.Min, maxLenght);
-
-            return recomendedLenght;
-        }
-
-        private Range GetSkiLenghtForFeeStyle(UserInput input)
-        {
-            var recomendedSkiRange = new Range(10, 15);
-            return GetRecomendedLenght(input.Height, recomendedSkiRange);
-        }
-
-        private Range GetRecomendedLenght(int height, Range range)
-        {
-            var recomendedMinLenght = height + range.Min;
-            var recomendedMaxLenght = height + range.Max;
-            return new Range(recomendedMinLenght, recomendedMaxLenght);
-        }
-
         private void ValidateInput(UserInput input)
         {
             if (input.Height <= _validHeightRange.Min)
@@ -90,6 +47,46 @@ namespace Startsys.Core.Services.Impl
 
             if (input.Age >= _valiAgeRange.Max)
                 throw new InvalidAgeException(input.Age, _valiAgeRange.Min, _valiAgeRange.Max);
+        }
+
+        private static Range GetSkiLenghtForSmallKids(UserInput input)
+        {
+            var recomendedSkiRange = new Range(0, 0);
+            return CalculateRange(input.Height, recomendedSkiRange);
+        }
+
+        private static Range GetSkiLenghtForMediumKids(UserInput input)
+        {
+            var recomendedSkiRange = new Range(10, 20);
+            return CalculateRange(input.Height, recomendedSkiRange);
+        }
+
+        private static Range GetSkiLengthForClassic(UserInput input)
+        {
+            var maxLenght = 207;
+            var recomendedSkiRange = new Range(20, 20);
+
+            var recomendedLenght = CalculateRange(input.Height, recomendedSkiRange);
+
+            if (recomendedLenght.Min > maxLenght && recomendedLenght.Max > maxLenght)
+                return new Range(maxLenght, maxLenght);
+
+            if (recomendedLenght.Max > maxLenght)
+                return new Range(recomendedLenght.Min, maxLenght);
+
+            return recomendedLenght;
+        }
+
+        private static Range GetSkiLenghtForFeeStyle(UserInput input)
+        {
+            var recomendedSkiRange = new Range(10, 15);
+            return CalculateRange(input.Height, recomendedSkiRange);
+        }
+
+
+        private static Range CalculateRange(int constant, Range range)
+        {
+            return new Range(constant + range.Min, constant + range.Max);
         }
     }
 }
