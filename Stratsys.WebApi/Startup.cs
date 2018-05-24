@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Stratsys.WebApi.Filters;
 using Stratsys.WebApi.Middlewares;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -21,8 +22,6 @@ namespace Stratsys.WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
-
             services.AddSwaggerGen(c =>
             {
                 c.CustomSchemaIds(x => x.FullName);
@@ -31,6 +30,11 @@ namespace Stratsys.WebApi
                 var basePath = AppContext.BaseDirectory;
                 var xmlPath = Path.Combine(basePath, "Stratsys.WebApi.xml");
                 c.IncludeXmlComments(xmlPath);
+            });
+            
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(ValidateModelStateFilter));
             });
         }
 

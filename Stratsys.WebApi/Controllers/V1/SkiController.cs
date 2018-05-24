@@ -16,7 +16,6 @@ namespace Stratsys.WebApi.Controllers.V1
             _skiService = skiService;
         }
 
-
         [HttpPost("recomended")]
         public IActionResult Index([FromBody] UserBodyInfoModel model)
         {
