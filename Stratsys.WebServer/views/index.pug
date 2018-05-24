@@ -1,5 +1,30 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+    script(src='/javascripts/main.js')
+
+    h1= title
+    p Please fill out the form below to get the #{title}
+
+    div.row
+        form(action="#")
+            label.col.s6
+                input#age(placeholder="13" type="number")
+                span Age
+            label.col.s6
+                input#height(placeholder="154" type="number")
+                span Height in CM
+            p
+                label
+                    input(type="radio" name="group1" value="freestyle" checked)
+                    span FreeStyle
+            p
+                label
+                    input(type="radio" name="group1" value="classic")
+                    span Classic
+
+    div.row
+        a#calculate-recomended.btn.col.s12.waves-effect.waves-light(href="#") Send
+
+
+

@@ -1,0 +1,22 @@
+extends layout
+
+block content
+
+    h1= title
+    p Here is the recommended length for you
+
+    div#result
+        p Age:
+            span= age
+        p Height:
+            span= height
+        p Skitype:
+            span= skiType
+        h3 Recommended length:
+            strong
+                span #{min} - #{max}
+
+    a.btn(onclick="window.history.back()") back
+
+
+
