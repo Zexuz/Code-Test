@@ -3,7 +3,7 @@ using Startsys.Core;
 
 namespace Stratsys.WebApi.Models
 {
-    public class GetSkiLenghtModel
+    public class UserBodyInfoModel
     {
         [Required]
         [Range(Config.MinHeight,Config.MaxHeight)]

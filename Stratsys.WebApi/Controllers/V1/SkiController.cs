@@ -4,7 +4,7 @@ using Startsys.Core.Models;
 using Startsys.Core.Services.Interfaces;
 using Stratsys.WebApi.Models;
 
-namespace Stratsys.WebApi.Controllers
+namespace Stratsys.WebApi.Controllers.V1
 {
     [Route("api/v1/[Controller]")]
     public class SkiController : Controller
@@ -18,18 +18,18 @@ namespace Stratsys.WebApi.Controllers
 
 
         [HttpPost("recomended")]
-        public IActionResult Index([FromBody] GetSkiLenghtModel recomendenModel)
+        public IActionResult Index([FromBody] UserBodyInfoModel model)
         {
             var skiType = SkiType.None;
-            if (!string.IsNullOrEmpty(recomendenModel.SkiType) && !Enum.TryParse(recomendenModel.SkiType, true, out skiType))
+            if (!string.IsNullOrEmpty(model.SkiType) && !Enum.TryParse(model.SkiType, true, out skiType))
             {
                 return BadRequest("Not a valid ski type.");
             }
             
             var userInput = new UserInput
             {
-                Age = recomendenModel.Age,
-                Height = recomendenModel.Height,
+                Age = model.Age,
+                Height = model.Height,
                 SkiType = skiType
             };
 
